@@ -3,6 +3,12 @@
 
 const obj = { abc: 1, 123: 2, d: 5 };
 
+function num1(obj) {
+  return Object.keys(obj).every((key) => typeof key === "string");
+}
+
+console.log(num1(obj));
+
 //2-misol
 //Agar object qiymatlari ichida falsy qiymatlar bo’lsa, ularni o’chirib yangi object hosil qiling. (Object.keys())
 
@@ -13,10 +19,41 @@ const obj2 = { a: false, b: 12, c: true, d: 0 };
 
 const obj3 = [7, 8, 4, 5, 7, 5, 4, 8, 5, 4, 7, 9];
 
+function num3(arr) {
+  let countObj = {};
+  for (let num of arr) {
+    countObj[num] = (countObj[num] || 0) + 1;
+  }
+  return countObj;
+}
+
+console.log(num3(obj3));
+
 //4-misol
 //Uzun sondan shunday obyekt hosil qilingki, bunda object kalitlari sinflardan, qiymatlari esa o’sha sonning mos ravishdagi o’sha sinfdagi qiymatlaridan tuzilgan bo’lsin. (for, slice)
 
 const obj4 = "8945472985629";
+
+const formatted = new Intl.NumberFormat("en-US")
+  .format(Number)
+  .split(",")
+  .reverse();
+
+const numberNames = [
+  "birlar",
+  "minglar",
+  "milionlar",
+  "milliardlar",
+  "tilionlar",
+];
+
+const obj_4 = {};
+
+for (let i = 0; i < numberNames.length; i++) {
+  obj_4[numberNames[i]] = formatted[i];
+}
+
+console.log(obj_4);
 
 //5-misol
 //Quyidagi ko'rinishda objectlarlardan tuzilgan massiv beriladi. Agar alreadyRead propertysi true bo'lsa o'sha kitob o'qigan deb chiqarilsin, aks holda o'qilmagan.
@@ -39,6 +76,18 @@ const books = [
   },
 ];
 
+function num5(books) {
+  books.forEach((book) => {
+    if (book.alreadyRead) {
+      console.log(`"${book.title}" kitobi o'qilgan.`);
+    } else {
+      console.log(`"${book.title}" kitobi o'qilmagan.`);
+    }
+  });
+}
+
+console.log(num5(books));
+
 //6-misol
 //Mahsulotlar massividagi objectlarni sonini, chegirmasini hisobga olib, umumiy summani hisoblang.
 
@@ -59,6 +108,9 @@ const obj7 = {
   sigir: 200,
   tovuq: 2,
 };
+
+const result = Object.entries(obj7);
+console.log(result);
 
 //8-misol
 //GPA ni hisoblovchi dastur tuzing.
@@ -99,11 +151,33 @@ const myAnswers = {
   10: "C",
 };
 
+let correctCount = 0;
+
+for (let key in rightAnswers) {
+  if (rightAnswers[key] === myAnswers[key]) {
+    correctCount++;
+  }
+}
+
+console.log("Togri javoblar soni:", correctCount);
+
 //10-misol
 // Qiymatlari sonlardan iborat obj nomli object berilgan. Qiymatlarini n martaga oshiruvchi getMultipleValues(n) nomli funksiya yozing.
 
 let n = 3;
 const obj10 = { a: 2, b: 3, c: 4, d: 6 };
+
+function getMultipleValues(n) {
+  let newObj = {};
+
+  for (let key in obj10) {
+    newObj[key] = obj10[key] * n;
+  }
+
+  return newObj;
+}
+
+console.log(getMultipleValues(n));
 
 //11-misol
 //Quyidagi obyektdan destructing orqali barcha qiymatlarini oling.
@@ -120,6 +194,22 @@ const product = {
     },
   },
 };
+
+const {
+  name: productName,
+  company: {
+    name: companyName,
+    price: companyPrice,
+    founder: { firstName, lastName, birthDate },
+  },
+} = product;
+
+console.log("Mahsulot nomi:", productName);
+console.log("Kompaniya nomi:", companyName);
+console.log("Kompaniya qiymati:", companyPrice);
+console.log("Asoschi ismi:", firstName);
+console.log("Asoschi familiyasi:", lastName);
+console.log("Tugilgan yili:", birthDate);
 
 //12-misol
 //Quyidagi massivdagi barcha o'quvchilarni protcentlarining o'rtacha qiymatini toping, shuningdek, objectlarga quyidagi propertylarni qo'shib yangi massiv qaytaring.
